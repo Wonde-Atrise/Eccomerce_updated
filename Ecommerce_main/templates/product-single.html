@@ -1,0 +1,245 @@
+{% extends 'mains.html' %}
+{% load static %}
+{% block content %}
+
+<section class="single-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'home'%}">Home</a></li>
+                    <li><a href="{% url 'shop' %}">Shop</a></li>
+                    <li class="active">Single Product</li>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <ol class="product-pagination text-right">
+                    <li><a href="#"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
+                    <li><a href="#">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
+                </ol>
+            </div>
+        </div>
+        {% for product_value in product_value %}
+        <div class="row mt-20">
+            <div class="col-md-5">
+                <div class="single-product-slider">
+                    <div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+                        <div class='carousel-outer'>
+                            <div class='carousel-inner '>
+                                <div class='item active'>
+                                    <img src="{% static 'images/shop/single-products/product-1.jpg'%}" alt='' data-zoom-image=" {% static 'images/shop/single-products/product-1.jpg'%}" />
+                                </div>
+                                <div class='item'>
+                                    <img src="{% static 'images/shop/single-products/product-1.jpg'%}" alt='' data-zoom-image=" {% static 'images/shop/single-products/product-1.jpg'%}" />
+                                </div>
+                                <div class='item'>
+                                    <img src="{% static 'images/shop/single-products/product-1.jpg'%}" alt='' data-zoom-image=" {% static 'images/shop/single-products/product-1.jpg'%}" />
+                                </div>
+                                <div class='item'>
+                                    <img src="{% static 'images/shop/single-products/product-1.jpg'%}" alt='' data-zoom-image=" {% static 'images/shop/single-products/product-1.jpg'%}" />
+                                </div>
+                                <div class='item'>
+                                    <img src="{% static 'images/shop/single-products/product-5.jpg'%}" alt='' data-zoom-image="{% static 'images/shop/single-products/product-6.jpg'%}" />
+                                </div>
+                                <div class='item'>
+                                    <img src="{% static 'images/shop/single-products/product-6.jpg'%}" alt='' data-zoom-image="{% static 'images/shop/single-products/product-6.jpg'%}" />
+                                </div>
+                            </div>
+
+                            <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+                                <i class="tf-ion-ios-arrow-left"></i>
+                            </a>
+                            <a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+                                <i class="tf-ion-ios-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <ol class='carousel-indicators mCustomScrollbar meartlab'>
+                            <li data-target='#carousel-custom' data-slide-to='0' class='active'>
+                                <img src="{% static 'images/shop/single-products/product-1.jpg'%}" alt='' />
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="single-product-details">
+                    <h2>{{product_value.product_name}}</h2>
+                    <p class="product-price">{{product_value.product_price}}</p>
+
+                    <p class="product-description mt-20">
+                        {{product_value.product_description}}
+                    </p>
+
+
+                    <div class="color-swatches">
+                        <span>color:</span>
+                        <ul>
+                            <li>
+                                <a href="#!" class="swatch-violet"></a>
+                            </li>
+                            <li>
+                                <a href="#!" class="swatch-black"></a>
+                            </li>
+                            <li>
+                                <a href="#!" class="swatch-cream"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="product-size">
+                        <span>Size:</span>
+                        <select class="form-control">
+                            <option>S</option>
+                            <option>M</option>
+                            <option>L</option>
+                            <option>XL</option>
+                        </select>
+                    </div>
+                    <div class="product-quantity">
+                        <span>Quantity:</span>
+                        <div class="product-quantity-slider">
+                            <input id="product-quantity" type="text" value="{{product_value.product_quantity}}" name="product-quantity" >
+                        </div>
+                    </div>
+                    <div class="product-category">
+                        <span>Categories:</span>
+                        <ul>
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">Soap</a></li>
+                        </ul>
+                    </div>
+                    <a href="{% url 'cart' %}" class="btn btn-main mt-20">Add To Cart</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="tabCommon mt-20">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#details-{{product_value.id}}" aria-expanded="true">Details</a></li>
+                        <li class=""><a data-toggle="tab" href="#reviews-{{product_value.id}}" aria-expanded="false">Reviews ({{product_value.total_comments}})</a></li>
+                    </ul>
+                    <div class="tab-content patternbg">
+                        <div id="details-{{product_value.id}}" class="tab-pane fade active in">
+                            <h4>Product Description</h4>
+                            <p>{{product_value.product_description}}</p>
+                        </div>
+
+
+                        <div id="reviews-{{product_value.id}}" class="tab-pane fade">
+                            <form action="{% url 'comment' product_value.id %}" method="POST" >
+                                {% csrf_token %}
+                                <div class="input-group mb-3 d-flex" style="display: flex !important;">
+                                    <input type="text" class="form-control" placeholder="comment here " aria-label="Recipient's username" aria-describedby="button-addon2" name="comment" style="width: 70% !important;">
+                                    <button class="btn btn-outline-secondary" type="submit" id="sub">Comment</button>
+                                </div>
+                            </form>
+                            <div class="post-comments">
+                                {% if product_value.comments.all %}
+                                <ul class="media-list comments-list m-bot-50 clearlist">
+                                    {% for comment in product_value.comments.all %}
+                                    <li class="media">
+
+                                        <a class="pull-left" href="{% url 'profile_details' comment.user %}">
+                                            <img class="media-object comment-avatar" src="{% static 'images/blog/avater-1.jpg'%}" alt="" width="50" height="50" />
+                                        </a>
+
+                                        <div class="media-body">
+                                            <div class="comment-info">
+                                                <h4 class="comment-author">
+                                                    <a href="{% url 'profile_details' comment.user.username %}">{{comment.user}}</a>
+                                                </h4>
+                                                <time datetime="2013-04-06T13:53">{{comment.created_at }}</time>
+                                                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
+                                            </div>
+                                            <p>
+                                                {{comment.text}}
+                                            </p>
+                                        </div>
+
+                                    </li>
+                                    {% endfor %}
+                                    </ul>
+
+                              
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<section class="products related-products section">
+    <div class="container">
+        <div class="row">
+            <div class="title text-center">
+                <h2>Related Products</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="product-item">
+                    <div class="product-thumb">
+                        <span class="bage">Sale</span>
+                        <img class="img-responsive" src="{% static 'images/shop/products/product-5.jpg'%}" alt="product-img" />
+                        <div class="preview-meta">
+                            <ul>
+                                <li>
+                                    <span  data-toggle="modal" data-target="#product-modal">
+                                        <i class="tf-ion-ios-search"></i>
+                                    </span>
+                                </li>
+                                <li>
+                                    <a href="#" ><i class="tf-ion-ios-heart"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#!"><i class="tf-ion-android-cart"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h4><a href="#">Reef Boardsport</a></h4>
+                        <p class="price">$200</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal product-modal fade" id="product-modal">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i class="tf-ion-close"></i>
+    </button>
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="modal-image">
+                            <img class="img-responsive" src="{% static 'images/shop/products/modal-product.jpg' %}" alt="Modal Product Image" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="product-short-details">
+                            <h2 class="product-title">GM Pendant, Basalt Grey</h2>
+                            <p class="product-price">$200</p>
+                            <p class="product-short-description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem iusto nihil cum. Illo laborum numquam rem aut officia dicta cumque.
+                            </p>
+                            <a href="#!" class="btn btn-main">Add To Cart</a>
+                            <a href="#!" class="btn btn-transparent">View Product Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

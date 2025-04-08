@@ -1,0 +1,97 @@
+{% extends 'mains.html' %}
+{% load static %}
+{% block content %}
+{% include 'profilenav.html'%}
+<style>
+  .beautiful-button {
+    background-color: #007bff; /* Primary blue color */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px; /* Slightly rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    width: 20%; /* Respecting your w-30 intention */
+    min-width: 100px; /* Ensure a minimum width for smaller screens */
+  }
+
+  .beautiful-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+  }
+
+  .beautiful-button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Custom focus ring */
+  }
+
+  .beautiful-button:active {
+    transform: translateY(0); /* Pressing down effect */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow when active */
+  }
+</style>
+
+
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+       {% include 'ul.html' %}
+      
+        <div class="dashboard-wrapper dashboard-user-profile">
+          <div class="media">
+            <div class="pull-left text-center" href="#!">
+            
+              <img class="media-object user-img" src="{{profiles.user.profile_image.url}}" alt="Image">
+              
+              <form method="post" action="{% url 'edit-photo' profiles.username %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" class="form-control" id="image" name="image" value="{{profiles.user.profile_image}}">
+
+                <button type="submit" class="btn btn-transparent mt-20">Change Image</button>
+
+              </form>
+             
+            </div>
+          
+              
+           <a class="btn btn-primary w-30 beautiful-button" href="{% url 'edit-profile' username %}">Edit Profile</a>
+
+            
+           
+            <div class="media-body">
+              <ul class="user-profile-list">
+                {% if profiles %}
+              
+                <li><span>Full Name:</span>{{profiles.first_name}}-{{profiles.last_name}} </li>
+                
+                <li><span>Country:</span>USA</li>
+                <li><span>Email:</span>{{profiles.email}}</li>
+                <li><span>Phone:</span>{{profiles.user.phone_number}}</li>
+                <li><span>Date of Birth:</span>{{profiles.user.birth_date}}</li>
+                {% else %}
+                
+                <li><span>Full Name:</span>Johanna Doe</li>
+                <li><span>Country:</span>USA</li>
+                <li><span>Email:</span>mail@gmail.com</li>
+                <li><span>Phone:</span>+880123123</li>
+                <li><span>Date of Birth:</span>Dec , 22 ,1991</li>
+                {%endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

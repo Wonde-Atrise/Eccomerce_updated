@@ -1,0 +1,10 @@
+<ul class="list-inline dashboard-menu text-center">
+    {% if username %}
+   
+    <li><a class="active" href="{% url 'user-interface' username %}">Dashboard</a></li>
+    <li><a href="{% url 'order' username %}">Orders</a></li>
+    <li><a href="{% url 'adres' username %}">Address</a></li>
+    <li><a href="{% url 'profile_details' username %}">Profile Details</a></li>
+
+    {% endif %}
+</ul>
